@@ -126,9 +126,60 @@ Before installing Tanzu Kubernetes grid into an air-gapped environment, a privat
  * Must have all the Tanzu Kubernetes Grid images uploaded before you start installing Tanzu Kubernetes grid. See [Copy installing Tanzu Kubernetes grid Images into an Air-gapped Environment](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-mgmt-clusters-image-copy-airgapped.html) for more details.
 
 ## Compliance and Security
-VMware-published Tanzu Kubernetes releases (TKrs), along with compatible versions of Kubernetes and supporting components, use the latest stable and generally-available update of the OS version that it packages, containing all current CVE and USN fixes as of the day that the image is built. The image files are signed by VMware and have filenames that contain a unique hash identifier.
+VMware-published Tanzu Kubernetes releases (TKrs), along with compatible versions of Kubernetes and supporting components, use the latest stable and generally-available update of the OS version that it packages, containing all current CVE and USN fixes as of the day that the image is built. The image files are signed by VMware and have filenames that contain a unique hash identifier.The VMware-published Tanzu Kubernetes releases (TKR) contain a BOM (bill of materials) for every component that appears in each Tanzu Kubernetes releases. This can be combined with the Tanzu Kubernetes grid BOM to provide a holistic view of the containers and contents of every combination of a Tanzu Kubernetes releases and Tanzu Kubernetes grid release.  These BOM files are securely served from VMware and stored as [imgpkg](https://carvel.dev/imgpkg/) generated [Open Container Initiative (OCI)](https://opencontainers.org/) compliant images that have immutable hashes associated with the BOM file itself.
+
 
 VMware provides FIPS (Federal Information Processing Standards)-capable version of Tanzu Kubernetes Grid. You can install and run a FIPS-capable version of Tanzu Kubernetes Grid, in which core components use cryptographic primitives provided by a FIPS-compliant library that provides [FIPS 140-2](https://www.nist.gov/standardsgov/compliance-faqs-federal-information-processing-standards-fips) approved based on the [BoringCrypto](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/2964) / Boring SSL module. These core components include components of Kubernetes, [Containerd and CRI](https://github.com/containerd/containerd), [CNI plugins](https://www.cni.dev/docs/), [CoreDNS](https://coredns.io/), and [etcd](https://etcd.io/).
+
+### Kubernetes Hardening
+
+VMware has a robust process of following U.S. Department of Defense  security standards for Tanzu Kubernetes Grid which includes scanning against an official [Security Technical Implementation Guide (STIG) provided by the Defense Information Systems Agency (DISA)](https://ncp.nist.gov/checklist/996). 
+
+Refer following sample post hardening results snapshots for Tanzu Kubernetes Grid
+
+#### Control Plane
+
+![Tanzu kubernetes grid control plane hardening result](./img/tko-on-aws-airgap/tkg-hardening-cp-result.png)
+
+#### Worker Node
+
+![Tanzu kubernetes grid worker node hardening result](./img/tko-on-aws-airgap/tkg-hardening-wl-result.png)
+
+You can [download](./resources/tkg-aws-airgap/CAAT-STIG-Resolution-Explanation.csv) the sample test results output.
+
+
+### Node OS Hardening
+
+Tanzu Kubernetes Grid is layered on top of VMs using the Ubuntu Operating System￼.Ubuntu has an official Security Technical Implementation Guide (STIG) provided by the Defense Information Systems Agency (DISA).  To comply with STIG guidelines and to enable consistent and fast machine deployments, VMs are deployed from images using Ubuntu as the base Operating System. VMware publishes AMI/OVA/VHD that are FIPS enabled and STIG hardened.
+
+Refer following OS hardening sample results snapshots.
+
+#### Control Plane
+
+![Ubuntu control plane hardening result](./img/tko-on-aws-airgap/ubuntu-hardening-cp-result.png)
+
+#### Worker Node
+
+![Ubuntu worker node hardening result](./img/tko-on-aws-airgap/ubuntu-hardening-wl-result.png)
+
+You can [download](./resources/tkg-aws-airgap/tkg-bionic-stig.csv) the sample test results output.
+
+The [VMware Service Installer](https://docs.vmware.com/en/Service-Installer-for-VMware-Tanzu/1.3/service-installer/GUID-AWS%20-%20Federal%20Airgap-AWSFederalAirgap-DeploymentGuide.html) allows you to deploy a working Tanzu Kubernetes Grid cluster that already has the DISA Kubernetes STIG applied and also enables FIPS 140-2 compatible algorithms. 
+ 
+### Ports, Protocols, and Services Management (PPSM)  
+
+The Cloud Computing SRG V1R4 states in Section 5.15 that `mission owners using CSOs of any service type (I/P/SaaS) must comply with DoDI 8551.01: Ports, Protocols, and Services Management (PPSM) when implementing and operating their systems/applications in an IaaS/PaaS CSO or when using a SaaS offering.`
+ This requirement is to ensure that a standardized process is in place to catalog, regulate, and control the use and management of protocols in the Internet protocol suite, and associated ports on government networks including interconnected systems and platforms.  
+ 
+To further this mission, and ensure that this information is readily available. For more information you can refer to the VMware public repository for [Tanzu Kubernetes Grid PPSM](https://ports.esp.vmware.com/home/Tanzu-Kubernetes-Grid).
+
+### National Institute of Standards and Technology ([NIST](https://www.nist.gov/)) 
+Since 2014, the Public Sector has been required to “develop, document, implement, and maintain” information security of government Information Systems via a standardized approach or framework.  A major component of how this strategy is implemented relies on the security controls documented in NIST Special Publication 800-53, and the Risk Management Framework guidelines established in NIST SP 800-37. 
+VMware maintains a partnership with the NIST Cybersecurity Center of Excellence (NCCoE) which includes validation of core VMware products including NSX, vSphere, vRealize and Tanzu Kubernetes Grid etc. Refer [Tanzu Kubernetes Grid NIST control](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-security-nist.html) for more information.
+ 
+### Tanzu Kubernetes Grid Security Overview
+
+More in depth details on the VMware security process and  current state of the art of Tanzu Kubernetes Grid security standards is detailed within [Tanzu Kubernetes Grid Security Overview Whitepaper](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-security-overview.html). 
 
 ## Cluster Creation and Management
 

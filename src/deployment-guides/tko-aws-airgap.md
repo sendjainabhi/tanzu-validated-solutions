@@ -41,18 +41,19 @@ For additional information about preparing to deploy Tanzu Kubernetes Grid on AW
 The main steps to deploy Tanzu for Kubernetes Operations on AWS EC2 are as follows. Each step links to more detailed instructions.
 
 1. [Set up AWS Infrastructure](#aws-infra).
-2. [Create an Offline JumpBox](#offline-jumpbox)
+2. [Create an Offline JumpBox](#offline-jumpbox).
 3. [Create and Set Up a Private container registry](#private-repo).
 4. [Copy the container images required to deploy Tanzu Kubernetes Grid](#copy-tkg-img).
-5. [Prepare an Internet-Restricted Environment](#prepEnv).
-6. [Install Tanzu Kubernetes Grid Management Cluster](#install-tkg).
-7. [Examine the Management Cluster Deployment](#examine-cluster).
-8. [Deploy Workload Clusters](#deploy-workload-cluster).
-9. [Install and Configure Packages into Workload Clusters](#install-packages).
-10. [Logs and Troubleshooting](#logs).
-11. [Delete Clusters](#cluster-mgmt).
-12. [Air-Gapped STIG/FIPS Deployment on AWS](#stig-fips).
-13. [Tanzu Kubernetes Grid Upgrade](#upgrade-tkg).
+5. [Tanzu Kubernetes Grid Build Machine Image](#tkg-build-machine-img).
+6. [Prepare an Internet-Restricted Environment](#prepEnv).
+7. [Install Tanzu Kubernetes Grid Management Cluster](#install-tkg).
+8. [Examine the Management Cluster Deployment](#examine-cluster).
+9. [Deploy Workload Clusters](#deploy-workload-cluster).
+10. [Install and Configure Packages into Workload Clusters](#install-packages).
+11. [Logs and Troubleshooting](#logs).
+12. [Delete Clusters](#cluster-mgmt).
+13. [Air-Gapped STIG/FIPS Deployment on AWS](#stig-fips).
+14. [Tanzu Kubernetes Grid Upgrade](#upgrade-tkg).
 
 ## <a id=aws-infra> </a> Set up AWS Infrastructure
 
@@ -67,11 +68,11 @@ Follow these steps to create an Internet-restricted (offline) AWS VPC or see [Wo
    2. Create your VPC with Valid CIDR and name.
 2. Create 3 Private Subnets.
    Click **Subnet** and create your subnet with:
-   - Private Subnet 1, Private Subnet 2 and Private Subnet 3 valid Name & VPC.
-   - Valid Subnet range which is valid IPv4 CIDR Block.
+   1. Private Subnet 1, Private Subnet 2 and Private Subnet 3 valid Name & VPC.
+   2. Valid Subnet range which is valid IPv4 CIDR Block.
 3. Create Private Route Table.
-   - Create a Route table in the same VPC.
-   - Make sure you selected the right VPC and gave a proper tag.
+   1. Create a Route table in the same VPC.
+   2. Make sure you selected the right VPC and gave a proper tag.
 4. Add Private Subnet in Private Route Table.
    1. Edit the Subnet Association.
    2. Select the PrivateSubnet checkbox.
@@ -79,6 +80,7 @@ Follow these steps to create an Internet-restricted (offline) AWS VPC or see [Wo
 5. Edit DNS Resolution and Hostname.
    1. Click **Action** and Edit DNS hostname.
    2. Select DNS Hostname and click **Save**.
+   3. Refer [aws doc](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-dns.html#vpc-dns-updating) for more information.
 
 **Note:** If you create multiple offline VPCs, also see [Getting started with transit gateways](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html) in AWS documentation to create an AWS transit gateway.
 
@@ -203,7 +205,7 @@ This registry should run outside of Tanzu Kubernetes Grid and is separate from a
 * Download the [binaries for the latest Harbor release](https://github.com/goharbor/harbor/releases).
 * Follow the Harbor [Installation and Configuration](https://goharbor.io/docs/2.0.0/install-config/) instructions in the Harbor documentation.
 
-## <a id=copy-tkg-img> </a> Copy the container images required to deploy Tanzu Kubernetes Grid.
+## <a id=copy-tkg-img> </a> Copy the container images required to deploy Tanzu Kubernetes Grid
 
 Copy the container images required to deploy Tanzu Kubernetes Grid on AWS to a private registry in a physically air-gapped, offline environment.  This procedure uses the scripts `download-images.sh`, `gen-publish-images-totar.sh`, and `gen-publish-images-fromtar.sh` to:
 
@@ -211,6 +213,16 @@ Copy the container images required to deploy Tanzu Kubernetes Grid on AWS to a p
 * Extract the images from the tar files and copy them to a private registry.
 
 See [Copy the container images required to deploy Tanzu Kubernetes Grid](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-mgmt-clusters-image-copy-airgapped.html) for more detailed instructions.
+
+### <a id=tkg-build-machine-img> </a> Tanzu Kubernetes Grid Build Machine Image
+
+If you have a requirements to build custom images , you can follow [Tanzu Kubernetes Grid Build Machine Images](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-build-images-index.html) steps.
+
+VMware support FIPS-Capable Version of Tanzu Kubernetes Grid. Refer [Tanzu Kubernetes Grid FIPS-Capable Version](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-mgmt-clusters-prepare-deployment.html#fips) for more information.
+
+For compliance and security requirements VMware has published security overview whitepaper.You can refer [Tanzu Kubernetes Grid security overview whitepaper](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.5/vmware-tanzu-kubernetes-grid-15/GUID-security-overview.html) for more information.
+
+
 
 ## <a id=prepEnv> </a> Prepare an Internet-Restricted Environment
 
