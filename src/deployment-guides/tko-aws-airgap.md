@@ -1,12 +1,12 @@
 # Deploy Tanzu Kubernetes Grid on AWS in an Air-Gapped Environment
 
-This document outlines the steps for deploying VMware Tanzu for Kubernetes Operations on AWS in an air-gapped (Internet-restricted) environment. The deployment is based on the reference design provided in [VMware Tanzu Kubernetes Grid on AWS Airgap Reference Design](../reference-designs/tko-on-aws-airgap.md).
+This document outlines the steps for deploying VMware Tanzu Kubernetes Grid on AWS in an air-gapped (Internet-restricted) environment. The deployment is based on the reference design provided in [VMware Tanzu Kubernetes Grid on AWS Airgap Reference Design](../reference-designs/tko-on-aws-airgap.md).
 
 ## Deploying with VMware Service Installer for Tanzu
  
 You can use VMware Service Installer for VMware Tanzu to automate this deployment. 
  
-VMware Service Installer for Tanzu automates the deployment of the reference designs for Tanzu for Kubernetes Operations. It uses best practices for deploying and configuring the required Tanzu for Kubernetes Operations components. 
+VMware Service Installer for Tanzu automates the deployment of the reference designs for Tanzu Kubernetes Grid. It uses best practices for deploying and configuring the required Tanzu Kubernetes Grid components. 
  
 To use Service Installer to automate this deployment, see [Deploying Tanzu Kubernetes Grid on Federal Air-gapped AWS VPC Using Service Installer for VMware Tanzu](https://docs.vmware.com/en/Service-Installer-for-VMware-Tanzu/1.3/service-installer/GUID-AWS%20-%20Federal%20Airgap-AWSFederalAirgap-DeploymentGuide.html).
  
@@ -14,7 +14,7 @@ Alternatively, if you decide to manually deploy each component, follow the steps
 
 ## Prerequisites
 
-Before deploying VMware Tanzu for Kubernetes Operations in an AWS air-gapped environment, ensure that the following are set up.
+Before deploying VMware Tanzu Kubernetes Grid in an AWS air-gapped environment, ensure that the following are set up.
 
 * **AWS Account**: An IAM user account with **administrative privileges**.
 * **AWS Resource Quotas**: Sufficient quotas to support both the management cluster and the workload clusters in your deployment. Otherwise, the cluster deployments will fail. Depending on the number of workload clusters you plan to deploy, you may need to increase the AWS services quotas from their default values. You will need to increase the quota in every region in which you deploy Tanzu Kubernetes Grid.
@@ -38,7 +38,7 @@ For additional information about preparing to deploy Tanzu Kubernetes Grid on AW
 
 ## Overview of the Deployment Steps
 
-The main steps to deploy Tanzu for Kubernetes Operations on AWS EC2 are as follows. Each step links to more detailed instructions.
+The main steps to deploy Tanzu Kubernetes Grid on AWS EC2 are as follows. Each step links to more detailed instructions.
 
 1. [Set up AWS Infrastructure](#aws-infra).
 2. [Create an Offline JumpBox](#offline-jumpbox).
@@ -341,6 +341,11 @@ tanzu cluster delete <management-cluster-name>
 ## <a id="stig-fips"> </a>Air-Gapped STIG/FIPS Deployment on AWS
 
 For how to deploy a STIG-hardened management/FIPS cluster to an air-gapped AWS environment, see [Deploy a STIG-Hardened Management Cluster to an Air-gapped AWS VPC](https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.4/vmware-tanzu-kubernetes-grid-14/GUID-security-airgap-stig-aws.html).
+
+## Deploy Tanzu Kubernetes Grid into AWS Commercial Cloud Services (C2S)
+
+For instructions on how to deploy Tanzu Kubernetes Grid into AWS Commercial Cloud Services (C2S), see [Deploy Tanzu Kubernetes Grid on C2S ](tkg-aws-airgap-c2s.md).
+
 
 ## <a id=upgrade-tkg> </a>Tanzu Kubernetes Grid Upgrade
 
