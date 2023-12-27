@@ -8,7 +8,7 @@ The following network diagram shows the network layout for a single virtual priv
 * One private subnet for each Amazon availability zone (AZ). These subnets are not automatically allocated a public IP address. The default gateway is a NAT gateway.  
 * One public subnet for each Amazon availability zone (AZ). These subnets are automatically allocated a public IP address. The default gateway is an Internet gateway if the subnet is connected to the Internet. A public subnet is optional if you do not need Internet ingress or egress.
 
-![aws network design diagram for tmc-tap-tsm deployment](./img/tmc-tap-tsm/eks-vpc-network.jpeg)
+![aws network design diagram for tmc-tap-tsm deployment](./img/tmc-tap-tsm/eks-vpc-network.jpg)
 
 ### Network Recommendations
 
@@ -35,7 +35,7 @@ Based on your application needs and desired outcomes, you can organize your clus
 
 For most use cases, a single VPC spread across multiple AZs is sufficient. If more separation is needed within one VPC, more subnets can be used to provide better IP-based visibility to corporate firewalls. The network diagram above depicts this architecture (considering the each departments IP separations for better utilization of IP’s).
 
-![aws single vpc](./img/tmc-tap-tsm/single-vpc.jpeg)
+![aws single vpc](./img/tmc-tap-tsm/single-vpc.jpg)
 
 #### Multiple VPC with Multiple Availability Zones
 
@@ -51,4 +51,4 @@ Consider the following design implications when designing your network architect
  NW-001 | Use separate networks for EKS clusters based on their usage | Isolate production EKS clusters from dev/test clusters | A separate set of Service Engines can be used for separating dev/test workload clusters from prod clusters
 NW-002 | Use separate networks/VPCs for the each department  function EKS clusters | Better isolation and security policies between departments isolate EKS clusters from department functions | Sharing the same network for multiple clusters can cause shortage of IP addresses
 
-To learn more about Amazon VPC , Refer to getting [started with amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-getting-started.html) and [Amazon EKS VPC and subnet requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html).
+To learn more about Amazon VPC , Refer to the getting [started with amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-getting-started.html) and [Amazon EKS VPC and subnet requirements and considerations](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html).
